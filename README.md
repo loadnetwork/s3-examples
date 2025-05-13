@@ -41,3 +41,48 @@ const s3Client = new S3Client({
   - It looks similar to `load_acc_*******`
 - `https://s3.load.rs` is the endpoint for the S3 interface provided by Load -- [codebase](https://github.com/weaveVM/wvm-aws-sdk-s3)
 - `forcePathStyle` set to `true` is *always* necessary.
+
+## Rust Examples
+
+```rust
+use aws_sdk_s3::error::SdkError;
+use aws_sdk_s3::operation::create_bucket::CreateBucketError;
+use aws_sdk_s3::Client;
+
+pub async fn create_client() -> Client {
+    let config = aws_config::from_env()
+        .endpoint_url("https://s3.load.rs")
+        .region("eu-west-2")
+        .load()
+        .await;
+
+    let s3_config = aws_sdk_s3::config::Builder::from(&config)
+        .force_path_style(true)
+        .build();
+
+    Client::from_conf(s3_config)
+}
+
+pub async fn s3_create_bucket() -> Result<(), SdkError<CreateBucketError>> {
+    let client = create_client().await;
+    
+    match client.create_bucket()
+        .bucket("LoadNetworkBucketTest")
+        .send()
+        .await {
+            Ok(output) => {
+                println!("✅ Bucket created: {}", output.location().unwrap_or("(no location)"));
+                Ok(())
+            },
+            Err(err) => {
+                println!("❌ Error creating bucket: {}", err);
+                Err(err)
+            }
+    }
+}
+```
+
+for more examples, checkout this [rust-examples](./rust-examples/).
+
+## License
+This repository is licensed under the [MIT License](./LICENSE)
