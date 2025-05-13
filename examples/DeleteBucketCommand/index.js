@@ -5,7 +5,7 @@ const accessKeyId = process.env.LOAD_ACCESS_KEY;
 const secretAccessKey = "";
 
 const s3Client = new S3Client({
-    region: "us-east-1", // Region is still required, even for custom endpoints
+    region: "eu-west-2", // Region is still required, even for custom endpoints
     endpoint: "https://s3.load.rs",
     credentials: {
         accessKeyId,
