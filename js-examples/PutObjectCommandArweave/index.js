@@ -7,7 +7,7 @@ async function uploadFile(bucketName) {
   const secretAccessKey = ""; /// meant to be empty
 
   const s3Client = new S3Client({
-    region: "eu-west-1",
+    region: "eu-west-2",
     endpoint: "https://s3.load.rs",
     credentials: {
       accessKeyId: accessKeyId,
