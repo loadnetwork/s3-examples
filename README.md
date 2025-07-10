@@ -41,6 +41,7 @@ const s3Client = new S3Client({
   - It looks similar to `load_acc_*******`
 - `https://s3.load.rs` is the endpoint for the S3 interface provided by Load -- [codebase](https://github.com/weaveVM/wvm-aws-sdk-s3)
 - `forcePathStyle` set to `true` is *always* necessary.
+- (optional) use `"uploader-api": "turbo"` is the command metadata object to push the object data to Arweave via Turbo. Default is load0.
 
 ## Rust Examples
 
